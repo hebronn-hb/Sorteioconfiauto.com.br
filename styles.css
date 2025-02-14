@@ -13,16 +13,16 @@ body {
 
 /* Foto de fundo */
 .background-image {
-    background-image: url('https://www.guiacariacica.com.br/files/guia/72/confiauto-protecao-automoveis241.webp');
+    background-image: url(' hebronn-hb/sorteioconfiauto.com/confiauto.online-3366c136c9dc64cb7c99fc09254943cf_hd.jpg'); /* Atualize o caminho */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     width: 100%;
-    height: 100vh; /* Ocupa toda a altura da janela */
-    position: fixed; /* Fixa no fundo da página */
+    height: 100vh;
+    position: fixed;
     top: 0;
     left: 0;
-    z-index: -1; /* Fica atrás de outros elementos */
+    z-index: -1;
 }
 
 /* Estilo do container */
