@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteio Confiauto</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="background-image"></div>
+
+    <div class="container">
+        <h1>Sorteio bilhete premiado</h1>
+        <p>Vamos ver quem vai ser o ganhador!!</p>
+
+        <input type="file" id="fileInput" accept=".csv">
+        <button onclick="sortear()">Sortear</button>
+
+        <div id="loading" aria-live="polite">Sorteando...</div>
+        <div id="winner" aria-live="polite"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
