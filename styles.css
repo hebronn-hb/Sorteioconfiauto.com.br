@@ -13,7 +13,7 @@ body {
 
 /* Foto de fundo */
 .background-image {
-    background-image: url('https://github.com/hebronn-hb/Sorteioconfiauto.com.br/blob/main/WhatsApp.jpeg'); /* Atualize o caminho */
+    background-image: url('https://raw.githubusercontent.com/hebronn-hb/Sorteioconfiauto.com.br/refs/heads/main/WhatsApp.jpeg'); /* Atualize o caminho */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
