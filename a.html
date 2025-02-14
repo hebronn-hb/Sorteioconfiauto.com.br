@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorteio Confiauto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #ff0909;
+            overflow: hidden; /* Para evitar barras de rolagem */
+        }
+
+        /* Estilo para o vídeo de fundo */
+        video.background-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1; /* Coloca o vídeo atrás do conteúdo */
+        }
+
+        .container {
+            max-width: 600px;
+            width: 90%;
+            padding: 20px;
+            background: rgb(255, 255, 255);
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            color: #000;
+            text-align: center;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        input[type="file"] {
+            margin-bottom: 20px;
+        }
+
+        #winner {
+            font-size: 1.5em;
+            color: #4CAF50;
+            margin-top: 20px;
+            padding: 10px;
+            border: 2px dashed #FFD700;
+            display: none; /* Oculto inicialmente */
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.6);
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        #loading {
+            font-size: 1.2em;
+            color: #555;
+            display: none;
+        }
+    </style>
+    <script>
+        let participantes = [];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const fileInput = document.getElementById('fileInput');
+            const loadingElement = document.getElementById('loading');
+            const winnerElement = document.getElementById('winner');
+
+            fileInput.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+
+                if (file && file.type === 'text/csv') {
+                    const reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        const content = e.target.result;
+                        // Ajusta separador para compatibilidade e remove linhas vazias
+                        participantes = content.split(/[\r\n]+/).map(linha => linha.trim()).filter(nome => nome);
+
+                        if (participantes.length === 0) {
+                            alert('O arquivo parece estar vazio ou mal formatado.');
+                            fileInput.value = ''; // Reseta o input
+                        }
+                    };
+
+                    reader.readAsText(file);
+                } else {
+                    alert('Por favor, envie um arquivo CSV válido.');
+                    fileInput.value = ''; // Reseta o input
+                }
+            });
+
+            window.sortear = function() {
+                if (participantes.length === 0) {
+                    alert('Nenhum participante encontrado. Por favor, envie uma planilha válida.');
+                    return;
+                }
+
+                loadingElement.style.display = 'block';
+                winnerElement.style.display = 'none';
+                winnerElement.innerText = '';
+
+                setTimeout(() => {
+                    const indice = Math.floor(Math.random() * participantes.length);
+                    const vencedor = participantes[indice];
+
+                    loadingElement.style.display = 'none';
+                    winnerElement.style.display = 'block';
+                    winnerElement.innerHTML = `
+                        <p>🎉 Parabéns ao vencedor! 🎉</p>
+                        <span>${vencedor}</span>
+                    `;
+
+                    const winnerName = winnerElement.querySelector('span');
+                    winnerName.style.fontSize = '2em';
+                    winnerName.style.color = '#FFD700';
+                    winnerName.style.fontWeight = 'bold';
+                }, 3000); // 3 segundos de "Sorteando..."
+            };
+        });
+    </script>
+</head>
+<body>
+    <!-- Vídeo de fundo -->
+    <video class="background-video" autoplay muted loop>
+        <source src="IMG_9933.MOV" type="video/mp4">
+        Seu navegador não suporta vídeo.
+    </video>
+
+    <div class="container">
+        <h1>Sorteio bilhete premiado</h1>
+        <p>Vamos ver quem vai ser o ganhador!!</p>
+
+        <input type="file" id="fileInput" accept=".csv">
+        <button onclick="sortear()">Sortear</button>
+
+        <div id="loading">Sorteando...</div>
+        <div id="winner"></div>
+    </div>
+</body>
+</html>
